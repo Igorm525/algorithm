@@ -29,6 +29,7 @@ const settings = {
 const player = {
     x: null,
     y: null,
+    settings,
 
     /**
      * Инициализация игрока и его метоположения.
@@ -44,35 +45,40 @@ const player = {
      */
     move(direction) {
         // Определяем направление и обновляем местоположение игрока в зависимости от направления.
+        let x = this.x, y = this.y;
         switch (direction) {
             case 1:
-                this.y++;
-                this.x--;
+                y++;
+                x--;
                 break;
             case 3:
-                this.y++;
-                this.x++;
+                y++;
+                x++;
                 break;
             case 7:
-                this.y--;
-                this.x--;
+                y--;
+                x--;
                 break;
             case 9:
-                this.y--;
-                this.x++;
+                y--;
+                x++;
                 break;
             case 2:
-                this.y++;
+                y++;
                 break;
             case 4:
-                this.x--;
+                x--;
                 break;
             case 6:
-                this.x++;
+                x++;
                 break;
             case 8:
-                this.y--;
+                y--;
                 break;
+        }
+        if (x >= 0 && x < this.settings.colsCount && y >= 0 && y < this.settings.rowsCount) {
+            this.x = x;
+            this.y = y;
         }
     },
 };
