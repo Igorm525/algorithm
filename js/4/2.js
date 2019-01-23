@@ -45,6 +45,22 @@ const player = {
     move(direction) {
         // Определяем направление и обновляем местоположение игрока в зависимости от направления.
         switch (direction) {
+            case 1:
+                this.y++;
+                this.x--;
+                break;
+            case 3:
+                this.y++;
+                this.x++;
+                break;
+            case 7:
+                this.y--;
+                this.x--;
+                break;
+            case 9:
+                this.y--;
+                this.x++;
+                break;
             case 2:
                 this.y++;
                 break;
