@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Корзина</title>
+</head>
+<body>
+<div id="container">
+    <div>
+        <img src="images/min/1.jpg" width="200" alt="Карандаш">
+        Цена 15 руб.
+        <button class="buy-btn" data-price="15" data-name="Карандаш">Купить</button>
+    </div>
+    <div>
+        <img src="images/min/2.jpg" width="200" alt="Клавиатура">
+        Цена 250 руб.
+        <button class="buy-btn" data-price="250" data-name="Клавиатура">Купить</button>
+    </div>
+    <div>
+        <img src="images/min/3.jpg" width="200" alt="Мышь">
+        Цена 350 руб.
+        <button class="buy-btn" data-price="350" data-name="Мышь">Купить</button>
+    </div>
+    <div>
+        <img src="images/min/4.jpg" width="200" alt="Монитор">
+        Цена 1500 руб.
+        <button class="buy-btn" data-price="1500" data-name="Монитор">Купить</button>
+    </div>
+</div>
+<div id="basket">
+    Количество товаров: <span id="basket-count">0</span>
+    Итого: <span id="basket-price">0</span>
+</div>
+<script>
+    "use strict";
+
+    const gallery = {
+        settings: {
+            productContainerId: 'container',
+            basketCountId: 'basket-count',
+            basketTotalId: 'basket-price',
+            buyButtonClass: 'buy-btn',
+        },
+        init(userSettings = {}) {
+            document
+                .getElementById(this.settings.productContainerId)
+                .addEventListener('click', event => this.addProduct(event));
+        },
+        addProduct(event) {
+            if (!event.target.classList.contains(this.settings.buyButtonClass )) return;
+            let basketCount = document.getElementById(this.settings.basketCountId);
+            let basketTotal = document.getElementById(this.settings.basketTotalId);
+            basketCount.innerText = +basketCount.innerText + 1;
+            basketTotal.innerText = +basketTotal.innerText + +event.target.dataset.price;
+            console.log(event.target.dataset.price)
+        }
+    };
+    window.onload = () => gallery.init();
+</script>
+</body>
+</html>
