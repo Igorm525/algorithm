@@ -170,7 +170,7 @@ const map = {
     // Отображаем еду.
     foodCell.classList.add('food');
     // Добавляем элемент ячейки еды в массив занятых точек на карте.
-    this.usedCells.push(foodPoint);
+    this.usedCells.push(foodCell);
   },
 };
 
