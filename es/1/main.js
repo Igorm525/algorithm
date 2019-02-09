@@ -22,9 +22,9 @@ const renderProduct = (item) => `
 </div>
 `;
 
-const renderPage = list => {
+const renderPage = (list = products) => {
     document.querySelector('.products').innerHTML = list.map(item => renderProduct(item)).join('');
 };
 
-renderPage(products);
+renderPage();
 
