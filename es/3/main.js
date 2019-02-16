@@ -28,10 +28,9 @@ class Cart {
         });
         cart.render();
     });
-    document.querySelectorAll('.remove').forEach(item => {
-      item.addEventListener('click', function (event) {
-        alert();
-      });
+    document.addEventListener('click', function (event) {
+      if (!event.target.classList.contains('remove')) return;
+      alert();
     });
   }
   getTotal() {
