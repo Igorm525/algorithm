@@ -88,7 +88,9 @@ class Cart {
   }
 
   render() {
-    document.querySelector('.cart').innerHTML = this.items.map(item => (new CartItem(item.id_product, item.product_name, item.price, item.quantity)).render()).join('');
+    document.querySelector('.cart').innerHTML = this.items.length
+     ? this.items.map(item => (new CartItem(item.id_product, item.product_name, item.price, item.quantity)).render()).join('')
+     : '<li class="text-center">Пусто</li>';
   }
 }
 
