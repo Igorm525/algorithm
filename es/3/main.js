@@ -19,14 +19,18 @@ class Cart {
     this.items = [];
   }
   init() {
-    let that = this;
-    Array.from(document.querySelectorAll('.add')).forEach(item => {
-      item.addEventListener('click', function (event) {
-        that.items.push({
+    let cart = this;
+    document.addEventListener('click', function (event) {
+        if (!event.target.classList.contains('add')) return;
+        cart.items.push({
           title: event.target.dataset.title,
           price: event.target.dataset.price
         });
-        that.render();
+        cart.render();
+    });
+    document.querySelectorAll('.remove').forEach(item => {
+      item.addEventListener('click', function (event) {
+        alert();
       });
     });
   }
