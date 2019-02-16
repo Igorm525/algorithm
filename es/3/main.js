@@ -31,16 +31,20 @@ class Cart {
     let cart = this;
     document.addEventListener('click', function (event) {
       if (event.target.classList.contains('add')) {
-        cart.items.push({
-          id_product: event.target.dataset.id,
-          product_name: event.target.dataset.title,
-          price: event.target.dataset.price
-        });
+        cart.addItem(event.target);
         cart.render();
       } else if (event.target.classList.contains('remove')) {
         cart.items = cart.items.filter(item => item.id_product != event.target.dataset.id )
         cart.render();
       }
+    });
+  }
+
+  addItem(item) {
+    this.items.push({
+      id_product: item.dataset.id,
+      product_name: item.dataset.title,
+      price: item.dataset.price
     });
   }
 
