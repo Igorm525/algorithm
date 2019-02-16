@@ -87,16 +87,20 @@ class Product {
 class ProductList {
   constructor() {
     this.items = [];
-    this.fetchItems();
-    this.render();
+    const promise = new Promise((resolve, reject) => {
+      this.fetchItems(resolve);
+    });
+    promise.then(() => {
+      this.render();
+    });
   }
 
-  fetchItems() {
+  fetchItems(resolve) {
     fetch(`${API}/catalogData.json`)
       .then(result => result.json())
       .then(data => {
         this.items = data;
-        this.render();
+        resolve();
       })
       .catch(error => console.log(error));
   }
