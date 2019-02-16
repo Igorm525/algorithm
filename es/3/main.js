@@ -10,7 +10,7 @@ class CartItem {
     this.price = price;
   }
   render() {
-    return `<a class="dropdown-item" href="#">${this.title}&nbsp;<span class="badge badge-primary">${this.price}$</span>&nbsp;<button class="remove btn btn-danger btn-sm">x</button></a>`;
+    return `<a class="cart-item dropdown-item" href="#">${this.title}&nbsp;<span class="badge badge-primary">${this.price}$</span>&nbsp;<button class="remove btn btn-danger btn-sm">x</button></a>`;
   }
 }
 
@@ -30,7 +30,7 @@ class Cart {
     });
     document.addEventListener('click', function (event) {
       if (!event.target.classList.contains('remove')) return;
-      alert();
+      event.target.parentNode.remove();
     });
   }
   getTotal() {
