@@ -40,19 +40,37 @@ class Cart {
         cart.addItem(event.target);
         cart.render();
       } else if (event.target.classList.contains('remove')) {
-        cart.items = cart.items.filter(item => item.id_product != event.target.dataset.id )
+        cart.removeItem(event.target);
         cart.render();
       }
     });
   }
 
-  addItem(item) {
-    this.items.push({
-      id_product: item.dataset.id,
-      product_name: item.dataset.title,
-      price: item.dataset.price,
-      quantity: 1
-    });
+  addItem(target) {
+    let item = this.items.find(item => item.id_product == target.dataset.id)
+    if(item) {
+      item.quantity += 1;
+      this.items = this.items.filter(item => item.id_product != target.dataset.id)
+      this.items.push(item)
+    } else {
+      this.items.push({
+        id_product: target.dataset.id,
+        product_name: target.dataset.title,
+        price: target.dataset.price,
+        quantity: 1
+      });
+    }
+  }
+
+  removeItem(target) {
+    let item = this.items.find(item => item.id_product == target.dataset.id)
+    if(item.quantity > 1) {
+      item.quantity -= 1;
+      this.items = this.items.filter(item => item.id_product != target.dataset.id)
+      this.items.push(item)
+    } else {
+      this.items = this.items.filter(item => item.id_product != target.dataset.id)
+    }
   }
 
   fetchItems(resolve) {
