@@ -9,6 +9,7 @@ class CartItem {
     this.title = title;
     this.price = price;
   }
+
   render() {
     return `<a class="cart-item dropdown-item" href="#">${this.title}&nbsp;<span class="badge badge-primary">${this.price}$</span>&nbsp;<button class="remove btn btn-danger btn-sm">x</button></a>`;
   }
@@ -18,24 +19,26 @@ class Cart {
   constructor() {
     this.items = [];
   }
+
   init() {
     let cart = this;
     document.addEventListener('click', function (event) {
-        if (!event.target.classList.contains('add')) return;
+      if (event.target.classList.contains('add')) {
         cart.items.push({
           title: event.target.dataset.title,
           price: event.target.dataset.price
         });
         cart.render();
-    });
-    document.addEventListener('click', function (event) {
-      if (!event.target.classList.contains('remove')) return;
-      event.target.parentNode.remove();
+      } else if (event.target.classList.contains('remove')) {
+        event.target.parentNode.remove();
+      }
     });
   }
+
   getTotal() {
     return this.items.reduce((total, item) => total + item.price);
   }
+
   render() {
     document.querySelector('.cart').innerHTML = this.items.map(item => (new CartItem(item.title, item.price)).render()).join('');
   }
@@ -46,6 +49,7 @@ class Product {
     this.title = title;
     this.price = price;
   }
+
   render() {
     return `
 <div class="col-lg-4 col-md-6 mb-4">
@@ -68,6 +72,7 @@ class ProductList {
   constructor() {
     this.items = [];
   }
+
   fetchItems() {
     fetch(`${API}/catalogData.json`)
       .then(result => result.json())
@@ -77,6 +82,7 @@ class ProductList {
       })
       .catch(error => console.log(error));
   }
+
   render() {
     document.querySelector('.products').innerHTML = this.items.map(item => (new Product(item.product_name, item.price)).render()).join('');
   }
