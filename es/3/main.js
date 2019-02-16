@@ -59,6 +59,7 @@ class Cart {
   }
 
   render() {
+    console.log(this.items)
     document.querySelector('.cart').innerHTML = this.items.map(item => (new CartItem(item.id_product, item.product_name, item.price)).render()).join('');
   }
 }
@@ -110,7 +111,7 @@ class ProductList {
   }
 
   render() {
-    document.querySelector('.products').innerHTML = this.items.map(item => (new Product(item.id, item.product_name, item.price)).render()).join('');
+    document.querySelector('.products').innerHTML = this.items.map(item => (new Product(item.id_product, item.product_name, item.price)).render()).join('');
   }
 }
 
