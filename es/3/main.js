@@ -5,13 +5,14 @@
 const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 
 class CartItem {
-  constructor(title, price) {
+  constructor(id, title, price) {
+    this.id = id;
     this.title = title;
     this.price = price;
   }
 
   render() {
-    return `<a class="cart-item dropdown-item" href="#">${this.title}&nbsp;<span class="badge badge-primary">${this.price}$</span>&nbsp;<button class="remove btn btn-danger btn-sm">x</button></a>`;
+    return `<a class="cart-item dropdown-item" href="#">${this.title}&nbsp;<span class="badge badge-primary">${this.price}$</span>&nbsp;<button data-id="${this.id}" class="remove btn btn-danger btn-sm">x</button></a>`;
   }
 }
 
@@ -36,7 +37,8 @@ class Cart {
         });
         cart.render();
       } else if (event.target.classList.contains('remove')) {
-        event.target.parentNode.remove();
+        cart.items = cart.items.filter(item => item.id_product != event.target.dataset.id )
+        cart.render();
       }
     });
   }
@@ -56,12 +58,13 @@ class Cart {
   }
 
   render() {
-    document.querySelector('.cart').innerHTML = this.items.map(item => (new CartItem(item.product_name, item.price)).render()).join('');
+    document.querySelector('.cart').innerHTML = this.items.map(item => (new CartItem(item.id_product, item.product_name, item.price)).render()).join('');
   }
 }
 
 class Product {
-  constructor(title, price) {
+  constructor(id, title, price) {
+    this.id = id;
     this.title = title;
     this.price = price;
   }
@@ -77,7 +80,7 @@ class Product {
             </h5>
             <h5>${this.price}</h5>
         </div>
-        <div class="card-footer"><button class="add btn btn-primary" data-title="${this.title}" data-price="${this.price}"><i class="fa fa-plus"></i>&nbsp;Добавить</button></div>
+        <div class="card-footer"><button class="add btn btn-primary" data-id="${this.id}" data-title="${this.title}" data-price="${this.price}"><i class="fa fa-plus"></i>&nbsp;Добавить</button></div>
     </div>
 </div>
 `;
@@ -106,7 +109,7 @@ class ProductList {
   }
 
   render() {
-    document.querySelector('.products').innerHTML = this.items.map(item => (new Product(item.product_name, item.price)).render()).join('');
+    document.querySelector('.products').innerHTML = this.items.map(item => (new Product(item.id, item.product_name, item.price)).render()).join('');
   }
 }
 
