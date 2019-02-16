@@ -18,6 +18,12 @@ class CartItem {
 class Cart {
   constructor() {
     this.items = [];
+    const promise = new Promise((resolve, reject) => {
+      this.fetchItems(resolve);
+    });
+    promise.then(() => {
+      this.render();
+    });
   }
 
   init() {
@@ -35,12 +41,22 @@ class Cart {
     });
   }
 
+  fetchItems(resolve) {
+    fetch(`${API}/getBasket.json`)
+      .then(result => result.json())
+      .then(data => {
+        this.items = data.contents;
+        resolve();
+      })
+      .catch(error => console.log(error));
+  }
+
   getTotal() {
     return this.items.reduce((total, item) => total + item.price);
   }
 
   render() {
-    document.querySelector('.cart').innerHTML = this.items.map(item => (new CartItem(item.title, item.price)).render()).join('');
+    document.querySelector('.cart').innerHTML = this.items.map(item => (new CartItem(item.product_name, item.price)).render()).join('');
   }
 }
 
@@ -71,6 +87,8 @@ class Product {
 class ProductList {
   constructor() {
     this.items = [];
+    this.fetchItems();
+    this.render();
   }
 
   fetchItems() {
@@ -89,9 +107,6 @@ class ProductList {
 }
 
 const productList = new ProductList();
-productList.fetchItems();
-productList.render();
-
 const cart = new Cart();
 window.onload = () => cart.init();
 
