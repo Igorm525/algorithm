@@ -5,14 +5,20 @@
 const API = 'https://raw.githubusercontent.com/GeekBrainsTutorial/online-store-api/master/responses';
 
 class CartItem {
-  constructor(id, title, price) {
+  constructor(id, title, price, quantity) {
     this.id = id;
     this.title = title;
     this.price = price;
+    this.quantity = quantity;
   }
 
   render() {
-    return `<a class="cart-item dropdown-item" href="#">${this.title}&nbsp;<span class="badge badge-primary">${this.price}$</span>&nbsp;<button data-id="${this.id}" class="remove btn btn-danger btn-sm">x</button></a>`;
+    return `
+<a class="cart-item dropdown-item" href="#">
+  ${this.title}&nbsp;<span class="badge badge-primary">${this.price}$</span>&nbsp;
+  ${this.quantity}&nbsp;шт.&nbsp;
+  <button data-id="${this.id}" data-quantity="${this.quantity}"class="remove btn btn-danger btn-sm">x</button>
+</a>`;
   }
 }
 
@@ -44,7 +50,8 @@ class Cart {
     this.items.push({
       id_product: item.dataset.id,
       product_name: item.dataset.title,
-      price: item.dataset.price
+      price: item.dataset.price,
+      quantity: 1
     });
   }
 
@@ -63,8 +70,7 @@ class Cart {
   }
 
   render() {
-    console.log(this.items)
-    document.querySelector('.cart').innerHTML = this.items.map(item => (new CartItem(item.id_product, item.product_name, item.price)).render()).join('');
+    document.querySelector('.cart').innerHTML = this.items.map(item => (new CartItem(item.id_product, item.product_name, item.price, item.quantity)).render()).join('');
   }
 }
 
