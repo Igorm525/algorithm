@@ -32,6 +32,7 @@ class Cart {
     document.addEventListener('click', function (event) {
       if (event.target.classList.contains('add')) {
         cart.items.push({
+          id_product: event.target.dataset.id,
           product_name: event.target.dataset.title,
           price: event.target.dataset.price
         });
