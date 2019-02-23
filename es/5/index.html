@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Интернет магазин</title>
+    <link rel="shortcut icon" type="image/png" href="images/earth-512.png"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+<div id="app">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#"><img src="images/earth-512.png" class="d-inline-block align-top" alt="">&nbsp;ECMAScript</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Главная</a></li>
+                    <li class="nav-item dropdown"  v-if="isVisibleCart">
+                        <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+                            <i class="fas fa-shopping-basket text-warning"></i>&nbsp;Корзина<span class="caret"></span>
+                        </a>
+                        <ul class="cart dropdown-menu">
+                            <span class="cart-item dropdown-item" href="#" v-for="product in cartProducts" :key="product.id_product">
+                                {{ product.product_name }}&nbsp;
+                                <span class="badge badge-primary">{{ product.price }}</span>&nbsp;руб.&nbsp;
+                                <span>{{ product.quantity }}</span>&nbsp;шт.&nbsp;
+                                <button class="remove btn btn-danger btn-sm" @click="remove(product)">x</button>
+                            </span>
+                            <span class="dropdown-item" v-if="!cartProducts.length">Корзина пуста</span>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <form class="mb-5 form-inline">
+            <i class="fas fa-search" @click="filter()" aria-hidden="true"></i>
+            <input class="form-control form-control-sm ml-3 w-75" v-model="searchLine" @keyup.enter="filter()" type="text" placeholder="Search" aria-label="Search">
+        </form>
+    </div>
+    <div class="container">
+        <div class="products row">
+            <div class="col-lg-4 col-md-6 mb-4" v-for="product in filteredProducts" :key="product.id_product">
+                <div class="card h-100">
+                    <a class="img-wrap" href="#"><img class="card-img-top" src="https://placehold.it/200x150"></a>
+                    <div class="card-body">
+                        <h5 class="card-title"><a class="text-info" href="#">{{ product.product_name }}</a></h5>
+                        <h5>{{ product.price }}</h5>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-primary" @click="add(product)"><i class="fa fa-plus"></i>&nbsp;Добавить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
